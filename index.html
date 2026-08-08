@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rebuilding Haiti, One Layer of Brick at a Time</title>
+<meta name="description" content="A family-led build in Haiti. Land purchased, perimeter wall raised, gate hung, foundation poured, septic tanks dug. Sustainable housing and paid local work, one course of block at a time." />
+
+<!-- Social sharing -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Rebuilding Haiti, One Layer of Brick at a Time" />
+<meta property="og:description" content="Sustainable housing and paid local work in Haiti. Follow the build and help lay the next course." />
+<meta property="og:image" content="https://i.ytimg.com/vi/zmePAFAUtg8/maxresdefault.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brick:  '#B85042',
+        sand:   '#E7E8D1',
+        palm:   '#A7BEAE',
+        ink:    '#241F1B',
+        cream:  '#F7F6EE',
+        mortar: '#CFCCBB'
+      },
+      fontFamily: {
+        display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+        body:    ['Newsreader', 'Georgia', 'serif'],
+        mono:    ['"IBM Plex Mono"', 'ui-monospace', 'monospace']
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { background: #F7F6EE; color: #241F1B; }
+  section[id] { scroll-margin-top: 84px; }
+
+  .eyebrow {
+    font-family: '"IBM Plex Mono"', ui-monospace, monospace;
+    font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+  }
+
+  /* Mortar line: the divider used between sections */
+  .mortar-rule {
+    height: 3px;
+    background-image: repeating-linear-gradient(90deg,#CFCCBB 0 26px, transparent 26px 32px);
+  }
+
+  /* ---- The wall: milestone tracker rendered as courses of block ---- */
+  .course-face {
+    position: absolute; inset: 0;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 900ms cubic-bezier(.22,.7,.3,1);
+  }
+  .course.is-laid .course-face { clip-path: inset(0 0 0 0); }
+  .course-face.built {
+    background-color: #B85042;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(247,246,238,.30) 0 3px, transparent 3px 104px),
+      repeating-linear-gradient(0deg,  rgba(247,246,238,.30) 0 3px, transparent 3px 100px);
+  }
+  .course:nth-child(even) .course-face.built { background-position: 52px 0, 0 0; }
+  .course-face.planned {
+    background-color: rgba(207,204,187,.28);
+    background-image:
+      repeating-linear-gradient(90deg, rgba(36,31,27,.10) 0 2px, transparent 2px 104px),
+      repeating-linear-gradient(0deg,  rgba(36,31,27,.10) 0 2px, transparent 2px 100px);
+  }
+  .course:nth-child(even) .course-face.planned { background-position: 52px 0, 0 0; }
+
+  /* Text starts dark on the unlaid (cream) course and turns light once the brick is laid */
+  .course .c-num    { color: rgba(36,31,27,.40); transition: color .5s ease .35s; }
+  .course .c-title  { color: #241F1B; transition: color .5s ease .35s; }
+  .course .c-detail { color: rgba(36,31,27,.70); transition: color .5s ease .35s; }
+  .course.built-row.is-laid .c-num    { color: rgba(247,246,238,.70); }
+  .course.built-row.is-laid .c-title  { color: #F7F6EE; }
+  .course.built-row.is-laid .c-detail { color: rgba(247,246,238,.85); }
+
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.shown { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .course-face { transition: none; clip-path: inset(0 0 0 0) !important; }
+    .reveal { opacity: 1 !important; transform: none !important; transition: none; }
+  }
+
+  :focus-visible { outline: 3px solid #B85042; outline-offset: 3px; border-radius: 2px; }
+
+  .field {
+    width: 100%; background: #fff; border: 1.5px solid #CFCCBB; padding: .7rem .85rem;
+    font-family: Newsreader, Georgia, serif; font-size: 1rem; color: #241F1B;
+  }
+  .field:focus { border-color: #B85042; outline: none; box-shadow: 0 0 0 3px rgba(184,80,66,.15); }
+  .label { font-family: '"IBM Plex Mono"', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #5c534b; display:block; margin-bottom:.35rem; }
+
+  dialog::backdrop { background: rgba(36,31,27,.72); }
+  dialog[open] { animation: pop .18s ease-out; }
+  @keyframes pop { from { opacity:0; transform: translateY(8px);} to {opacity:1; transform:none;} }
+</style>
+</head>
+
+<body class="font-body antialiased">
+
+<a href="#story" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:m-3 focus:bg-brick focus:text-cream focus:px-4 focus:py-2">Skip to content</a>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<header class="sticky top-0 z-40 bg-cream/95 backdrop-blur border-b-[3px] border-mortar">
+  <nav class="mx-auto max-w-6xl px-5 h-[68px] flex items-center justify-between gap-4">
+    <a href="#top" class="flex items-center gap-2.5 shrink-0">
+      <span class="w-7 h-7 bg-brick" style="background-image:repeating-linear-gradient(0deg,rgba(247,246,238,.45) 0 2px,transparent 2px 9px),repeating-linear-gradient(90deg,rgba(247,246,238,.45) 0 2px,transparent 2px 15px)"></span>
+      <span class="font-display font-extrabold tracking-tight leading-none text-[15px] sm:text-[17px]">Rebuilding&nbsp;Haiti</span>
+    </a>
+
+    <ul class="hidden lg:flex items-center gap-6 font-mono text-[12px] tracking-wide uppercase">
+      <li><a class="hover:text-brick" href="#story">Story</a></li>
+      <li><a class="hover:text-brick" href="#milestones">Milestones</a></li>
+      <li><a class="hover:text-brick" href="#impact">Economic impact</a></li>
+      <li><a class="hover:text-brick" href="#gallery">Gallery</a></li>
+      <li><a class="hover:text-brick" href="#help">Ways to help</a></li>
+      <li><a class="hover:text-brick" href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="flex items-center gap-2">
+      <a data-donate href="#" target="_blank" rel="noopener"
+         class="hidden sm:inline-block bg-brick text-cream font-display font-semibold text-[14px] px-4 py-2 hover:bg-[#a2453a] transition-colors">Donate</a>
+      <button id="menuBtn" aria-expanded="false" aria-controls="mobileMenu"
+              class="lg:hidden border-[1.5px] border-ink px-3 py-2 font-mono text-[11px] uppercase tracking-widest">Menu</button>
+    </div>
+  </nav>
+
+  <div id="mobileMenu" hidden class="lg:hidden border-t-[3px] border-mortar bg-cream">
+    <ul class="px-5 py-3 font-mono text-[13px] uppercase tracking-wide grid gap-1">
+      <li><a class="block py-2.5 border-b border-mortar" href="#story">Story</a></li>
+      <li><a class="block py-2.5 border-b border-mortar" href="#milestones">Milestones</a></li>
+      <li><a class="block py-2.5 border-b border-mortar" href="#impact">Economic impact</a></li>
+      <li><a class="block py-2.5 border-b border-mortar" href="#gallery">Gallery</a></li>
+      <li><a class="block py-2.5 border-b border-mortar" href="#help">Ways to help</a></li>
+      <li><a class="block py-2.5 border-b border-mortar" href="#contact">Contact</a></li>
+      <li><a data-donate class="block py-3 mt-2 bg-brick text-cream text-center" href="#" target="_blank" rel="noopener">Donate on GoFundMe</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="mx-auto max-w-6xl px-5 pt-12 pb-14 md:pt-20 md:pb-20">
+  <div class="grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-start">
+
+    <div>
+      <p class="eyebrow text-brick" id="heroEyebrow">Project log · Phase 5 of 9 complete</p>
+
+      <h1 class="font-display font-extrabold tracking-[-0.03em] leading-[0.95] mt-4
+                 text-[2.6rem] sm:text-[3.4rem] lg:text-[3.9rem]" id="heroHeadline">
+        We stopped waiting for someone else to build it.
+      </h1>
+
+      <p class="mt-6 text-[1.14rem] leading-[1.65] max-w-[46ch] text-ink/85" id="heroSub">
+        <em>Rebuilding Haiti, One Layer of Brick at a Time</em> is a family-led construction project on
+        land we bought and paid for. The perimeter wall is standing. The steel gate is hung. The
+        foundation is poured. Two septic tanks go ten feet into the ground. Every course of block
+        was laid by Haitian hands, for Haitian wages.
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a data-donate href="#" target="_blank" rel="noopener"
+           class="bg-brick text-cream font-display font-semibold text-[1.05rem] px-7 py-3.5 hover:bg-[#a2453a] transition-colors">
+          Donate on GoFundMe
+        </a>
+        <a href="#help"
+           class="border-[2px] border-ink font-display font-semibold text-[1.05rem] px-7 py-3.5 hover:bg-sand transition-colors">
+          Other ways to help
+        </a>
+      </div>
+
+      <dl class="mt-11 grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-6 border-t-[3px] border-mortar pt-6">
+        <div><dt class="eyebrow text-ink/55">Phases done</dt><dd class="font-display font-extrabold text-[2rem] leading-none mt-1.5" id="statDone">5</dd></div>
+        <div><dt class="eyebrow text-ink/55">Trades hired</dt><dd class="font-display font-extrabold text-[2rem] leading-none mt-1.5">5</dd></div>
+        <div><dt class="eyebrow text-ink/55">Septic depth</dt><dd class="font-display font-extrabold text-[2rem] leading-none mt-1.5">10 ft</dd></div>
+        <div><dt class="eyebrow text-ink/55">Built on site</dt><dd class="font-display font-extrabold text-[2rem] leading-none mt-1.5">100%</dd></div>
+      </dl>
+    </div>
+
+    <!-- Video: click-to-load facade keeps the page fast -->
+    <figure class="lg:mt-11">
+      <div id="videoBox" class="relative aspect-video bg-ink overflow-hidden border-[3px] border-ink">
+        <button id="playBtn" class="group absolute inset-0 w-full h-full" aria-label="Play the campaign video">
+          <img id="videoThumb" src="https://i.ytimg.com/vi/zmePAFAUtg8/maxresdefault.jpg" alt=""
+               class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+          <span class="absolute inset-0 flex items-center justify-center">
+            <span class="bg-brick text-cream font-display font-semibold px-6 py-3 shadow-lg group-hover:bg-[#a2453a] transition-colors">▶ Watch the build</span>
+          </span>
+        </button>
+      </div>
+      <figcaption class="mt-3 font-mono text-[11px] uppercase tracking-widest text-ink/55">
+        Walk the site with <span id="organizerName">Jocely Emile</span>
+      </figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<div class="mortar-rule"></div>
+
+<!-- ══════════════════ STORY ══════════════════ -->
+<section id="story" class="bg-sand">
+  <div class="mx-auto max-w-6xl px-5 py-16 md:py-24">
+    <p class="eyebrow text-brick">Why we are building</p>
+    <div class="grid lg:grid-cols-[1fr_1fr] gap-10 lg:gap-16 mt-4">
+      <h2 class="font-display font-extrabold tracking-[-0.03em] leading-[1.0] text-[2.1rem] sm:text-[2.7rem]">
+        You should not feel like a tourist in your own land.
+      </h2>
+      <div class="space-y-5 text-[1.08rem] leading-[1.7] text-ink/85">
+        <p>
+          Many of us left Haiti carrying an address we can no longer go back to. Family land sits
+          empty or unsafe. When we visit, we sleep in rented rooms in our own country and leave
+          again after a week. That is the feeling this project exists to end.
+        </p>
+        <p>
+          So we started with the least glamorous, most necessary work: buy the land outright, wall
+          it, gate it, and put a real foundation under it. Not a plan on paper. Block, steel, and
+          concrete you can stand on.
+        </p>
+        <p>
+          The house is the visible part. The rest is the point. Every phase is contracted to people
+          who live nearby, and every bag of cement is bought from suppliers in the area. A build
+          that hires locally leaves something behind after the last truck pulls out.
+        </p>
+      </div>
+    </div>
+
+    <blockquote class="mt-14 border-l-[6px] border-brick pl-6 md:pl-8 max-w-[52ch]">
+      <p class="font-display font-semibold text-[1.5rem] sm:text-[1.9rem] leading-[1.2] tracking-[-0.02em]">
+        “A wall keeps a family safe. A payroll keeps a town alive. We are trying to do both with the
+        same pile of block.”
+      </p>
+      <cite class="eyebrow not-italic text-ink/60 block mt-4">Jocely Emile, campaign organizer</cite>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ══════════════════ MILESTONES: THE WALL ══════════════════ -->
+<section id="milestones" class="mx-auto max-w-6xl px-5 py-16 md:py-24">
+  <div class="flex flex-wrap items-end justify-between gap-6">
+    <div>
+      <p class="eyebrow text-brick">Build progress</p>
+      <h2 class="font-display font-extrabold tracking-[-0.03em] leading-[1.0] text-[2.1rem] sm:text-[2.8rem] mt-3">
+        The wall, course by course
+      </h2>
+      <p class="mt-3 text-ink/75 max-w-[48ch] text-[1.05rem] leading-relaxed">
+        Filled courses are finished and paid for. Outlined courses are what your donation goes to next.
+      </p>
+    </div>
+    <p class="font-mono text-[12px] uppercase tracking-widest text-ink/60" id="progressLabel">Loading progress…</p>
+  </div>
+
+  <!-- Courses stack bottom-up, so the newest work sits on top of the finished wall -->
+  <div id="wall" class="mt-10 border-[3px] border-ink bg-cream"></div>
+
+  <p class="mt-4 font-mono text-[11px] uppercase tracking-widest text-ink/45">Ground level ↑ · read from the bottom up</p>
+</section>
+
+<div class="mortar-rule"></div>
+
+<!-- ══════════════════ ECONOMIC IMPACT ══════════════════ -->
+<section id="impact" class="bg-palm/25">
+  <div class="mx-auto max-w-6xl px-5 py-16 md:py-24">
+    <p class="eyebrow text-brick">Where the money lands</p>
+    <h2 class="font-display font-extrabold tracking-[-0.03em] leading-[1.0] text-[2.1rem] sm:text-[2.8rem] mt-3 max-w-[20ch]">
+      Five trades, paid on site, in Haiti.
+    </h2>
+    <p class="mt-4 max-w-[54ch] text-[1.05rem] leading-relaxed text-ink/80">
+      Construction money moves through a community faster than almost anything else. A day of block
+      work becomes a day of school fees, a market run, a fuel tank. These are the people the build
+      pays.
+    </p>
+
+    <ul class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-mortar border-[3px] border-ink">
+      <li class="bg-cream p-7">
+        <p class="eyebrow text-brick">Trade 01</p>
+        <h3 class="font-display font-extrabold text-[1.45rem] mt-2 tracking-tight">Masons</h3>
+        <p class="mt-2.5 text-ink/80 leading-relaxed">Mixing, laying, and pointing every block in the perimeter wall and the structure above the foundation.</p>
+      </li>
+      <li class="bg-cream p-7">
+        <p class="eyebrow text-brick">Trade 02</p>
+        <h3 class="font-display font-extrabold text-[1.45rem] mt-2 tracking-tight">Steelworkers</h3>
+        <p class="mt-2.5 text-ink/80 leading-relaxed">Cutting and tying rebar for the foundation, and fabricating the entrance gate by hand rather than importing one.</p>
+      </li>
+      <li class="bg-cream p-7">
+        <p class="eyebrow text-brick">Trade 03</p>
+        <h3 class="font-display font-extrabold text-[1.45rem] mt-2 tracking-tight">Plumbers</h3>
+        <p class="mt-2.5 text-ink/80 leading-relaxed">Setting the drainage runs into the two ten-foot septic tanks and roughing in the water lines for the house.</p>
+      </li>
+      <li class="bg-cream p-7">
+        <p class="eyebrow text-brick">Trade 04</p>
+        <h3 class="font-display font-extrabold text-[1.45rem] mt-2 tracking-tight">Truck drivers</h3>
+        <p class="mt-2.5 text-ink/80 leading-relaxed">Hauling sand, gravel, block, and water to a site that no delivery service reaches on its own.</p>
+      </li>
+      <li class="bg-cream p-7">
+        <p class="eyebrow text-brick">Trade 05</p>
+        <h3 class="font-display font-extrabold text-[1.45rem] mt-2 tracking-tight">Local suppliers</h3>
+        <p class="mt-2.5 text-ink/80 leading-relaxed">Cement, block, and hardware bought from nearby shops instead of shipped in, so the margin stays in the community.</p>
+      </li>
+      <li class="bg-brick text-cream p-7 flex flex-col justify-between">
+        <div>
+          <p class="eyebrow text-cream/70">The multiplier</p>
+          <h3 class="font-display font-extrabold text-[1.45rem] mt-2 tracking-tight">Wages, not handouts</h3>
+          <p class="mt-2.5 text-cream/90 leading-relaxed">No wage leaves the country. Fund a phase and you fund a payroll.</p>
+        </div>
+        <a data-donate href="#" target="_blank" rel="noopener" class="mt-5 inline-block border-2 border-cream px-5 py-2.5 font-display font-semibold hover:bg-cream hover:text-brick transition-colors">Fund the next phase</a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════════ PROGRESS LOG ══════════════════ -->
+<section id="updates" class="mx-auto max-w-6xl px-5 py-16 md:py-24">
+  <p class="eyebrow text-brick">From the site</p>
+  <h2 class="font-display font-extrabold tracking-[-0.03em] text-[2.1rem] sm:text-[2.8rem] mt-3">Progress log</h2>
+  <div id="updatesList" class="mt-10 grid gap-px bg-mortar border-[3px] border-ink"></div>
+</section>
+
+<div class="mortar-rule"></div>
+
+<!-- ══════════════════ GALLERY ══════════════════ -->
+<section id="gallery" class="bg-sand">
+  <div class="mx-auto max-w-6xl px-5 py-16 md:py-24">
+    <p class="eyebrow text-brick">Documentation</p>
+    <h2 class="font-display font-extrabold tracking-[-0.03em] text-[2.1rem] sm:text-[2.8rem] mt-3">Photos and video from the build</h2>
+    <div id="galleryGrid" class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+  </div>
+</section>
+
+<!-- ══════════════════ WAYS TO HELP ══════════════════ -->
+<section id="help" class="mx-auto max-w-6xl px-5 py-16 md:py-24">
+  <p class="eyebrow text-brick">Three ways in</p>
+  <h2 class="font-display font-extrabold tracking-[-0.03em] text-[2.1rem] sm:text-[2.8rem] mt-3 max-w-[18ch]">
+    Money, materials, or a partnership.
+  </h2>
+
+  <div class="mt-12 grid lg:grid-cols-3 gap-6">
+
+    <!-- Tier 1 -->
+    <article class="border-[3px] border-ink bg-brick text-cream p-8 flex flex-col">
+      <p class="eyebrow text-cream/70">Option one</p>
+      <h3 class="font-display font-extrabold text-[1.9rem] mt-2 tracking-tight leading-none">Give money</h3>
+      <p class="mt-4 text-cream/90 leading-relaxed flex-1">
+        The fastest way to keep crews working. Donations go through GoFundMe, which handles payment
+        security and shows every contribution publicly.
+      </p>
+      <ul class="mt-6 font-mono text-[12px] uppercase tracking-wide space-y-2 text-cream/80">
+        <li>$25 — a bag of cement</li>
+        <li>$150 — a mason's week</li>
+        <li>$500 — a truckload of block</li>
+      </ul>
+      <a data-donate href="#" target="_blank" rel="noopener"
+         class="mt-7 block text-center bg-cream text-brick font-display font-semibold text-[1.05rem] px-6 py-3.5 hover:bg-white transition-colors">
+        Donate on GoFundMe
+      </a>
+    </article>
+
+    <!-- Tier 2 -->
+    <article class="border-[3px] border-ink bg-cream p-8 flex flex-col">
+      <p class="eyebrow text-brick">Option two</p>
+      <h3 class="font-display font-extrabold text-[1.9rem] mt-2 tracking-tight leading-none">Pledge materials</h3>
+      <p class="mt-4 text-ink/80 leading-relaxed flex-1">
+        Cement, rebar, block, roofing sheets, tools, a generator, a water tank, or the use of a
+        truck. Tell us what you have and where it is, and we will tell you whether we can use it and how to get it there.
+      </p>
+      <button data-open="materialsDialog"
+              class="mt-7 border-[2px] border-ink font-display font-semibold text-[1.05rem] px-6 py-3.5 hover:bg-sand transition-colors">
+        Pledge materials
+      </button>
+    </article>
+
+    <!-- Tier 3 -->
+    <article class="border-[3px] border-ink bg-cream p-8 flex flex-col">
+      <p class="eyebrow text-brick">Option three</p>
+      <h3 class="font-display font-extrabold text-[1.9rem] mt-2 tracking-tight leading-none">Partner with us</h3>
+      <p class="mt-4 text-ink/80 leading-relaxed flex-1">
+        For companies, congregations, NGOs, and diaspora associations. Sponsor a named phase, match
+        donations from your staff, or bring engineering and logistics support to the site.
+      </p>
+      <button data-open="partnerDialog"
+              class="mt-7 border-[2px] border-ink font-display font-semibold text-[1.05rem] px-6 py-3.5 hover:bg-sand transition-colors">
+        Start a partnership inquiry
+      </button>
+    </article>
+  </div>
+
+  <!-- Newsletter + share -->
+  <div class="mt-6 grid lg:grid-cols-[1.25fr_1fr] gap-6">
+    <div class="border-[3px] border-ink bg-palm/30 p-8">
+      <p class="eyebrow text-brick">Progress updates</p>
+      <h3 class="font-display font-extrabold text-[1.7rem] mt-2 tracking-tight">Get an email when a phase finishes</h3>
+      <p class="mt-3 text-ink/80 leading-relaxed max-w-[48ch]">Photos and a short note from the site. A few times a year, never more than once a month.</p>
+
+      <form name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html"
+            class="mt-6 grid sm:grid-cols-[1fr_auto] gap-3" data-ajax>
+        <input type="hidden" name="form-name" value="newsletter" />
+        <p hidden><label>Leave this empty <input name="bot-field" /></label></p>
+        <div>
+          <label class="label" for="nl-email">Email address</label>
+          <input class="field" id="nl-email" name="email" type="email" required placeholder="you@example.com" />
+        </div>
+        <button class="bg-brick text-cream font-display font-semibold px-6 py-3 self-end hover:bg-[#a2453a] transition-colors" type="submit">Subscribe</button>
+        <p class="sm:col-span-2 font-mono text-[11px] uppercase tracking-widest" data-status role="status"></p>
+      </form>
+    </div>
+
+    <div class="border-[3px] border-ink bg-cream p-8">
+      <p class="eyebrow text-brick">Amplify</p>
+      <h3 class="font-display font-extrabold text-[1.7rem] mt-2 tracking-tight">Share the campaign</h3>
+      <p class="mt-3 text-ink/80 leading-relaxed">Sharing costs nothing and reliably brings in more than a single donation does.</p>
+      <div class="mt-5 grid grid-cols-2 gap-2 font-display font-semibold text-[.95rem]">
+        <a id="shareX" href="#" target="_blank" rel="noopener" class="border-[1.5px] border-ink px-4 py-2.5 text-center hover:bg-sand">X / Twitter</a>
+        <a id="shareFb" href="#" target="_blank" rel="noopener" class="border-[1.5px] border-ink px-4 py-2.5 text-center hover:bg-sand">Facebook</a>
+        <a id="shareWa" href="#" target="_blank" rel="noopener" class="border-[1.5px] border-ink px-4 py-2.5 text-center hover:bg-sand">WhatsApp</a>
+        <button id="copyLink" class="border-[1.5px] border-ink px-4 py-2.5 hover:bg-sand">Copy link</button>
+      </div>
+      <p id="copyStatus" class="mt-3 font-mono text-[11px] uppercase tracking-widest text-brick" role="status"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ CONTACT / FOOTER ══════════════════ -->
+<footer id="contact" class="bg-ink text-cream mt-4">
+  <div class="mx-auto max-w-6xl px-5 py-16 md:py-20 grid md:grid-cols-[1.3fr_1fr_1fr] gap-10">
+    <div>
+      <h2 class="font-display font-extrabold text-[1.9rem] tracking-tight leading-none">Rebuilding Haiti,<br />One Layer of Brick at a Time</h2>
+      <p class="mt-4 text-cream/70 leading-relaxed max-w-[38ch]">
+        A family-led housing and jobs project. Organized by <span data-organizer>Jocely Emile</span>.
+      </p>
+      <a data-donate href="#" target="_blank" rel="noopener"
+         class="mt-6 inline-block bg-brick text-cream font-display font-semibold px-6 py-3 hover:bg-[#a2453a] transition-colors">Donate on GoFundMe</a>
+    </div>
+    <div>
+      <p class="eyebrow text-cream/50">Get in touch</p>
+      <ul class="mt-4 space-y-2.5">
+        <li><a class="hover:text-palm underline underline-offset-4" data-email href="#">hello@rebuildinghaiti.org</a></li>
+        <li><a class="hover:text-palm underline underline-offset-4" href="https://www.youtube.com/watch?v=zmePAFAUtg8" target="_blank" rel="noopener">Campaign video</a></li>
+        <li><a class="hover:text-palm underline underline-offset-4" data-donate href="#" target="_blank" rel="noopener">GoFundMe page</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="eyebrow text-cream/50">On this page</p>
+      <ul class="mt-4 space-y-2.5 font-mono text-[12px] uppercase tracking-wide text-cream/80">
+        <li><a class="hover:text-palm" href="#story">Story</a></li>
+        <li><a class="hover:text-palm" href="#milestones">Milestones</a></li>
+        <li><a class="hover:text-palm" href="#impact">Economic impact</a></li>
+        <li><a class="hover:text-palm" href="#gallery">Gallery</a></li>
+        <li><a class="hover:text-palm" href="#help">Ways to help</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-cream/15">
+    <p class="mx-auto max-w-6xl px-5 py-6 font-mono text-[11px] uppercase tracking-widest text-cream/45">
+      © <span id="year"></span> Rebuilding Haiti · Donations are processed by GoFundMe
+    </p>
+  </div>
+</footer>
+</main>
+
+<!-- ══════════════════ DIALOGS ══════════════════ -->
+
+<!-- Material donations -->
+<dialog id="materialsDialog" class="w-[min(640px,92vw)] p-0 bg-cream text-ink border-[3px] border-ink">
+  <div class="p-7 sm:p-9">
+    <div class="flex items-start justify-between gap-6">
+      <div>
+        <p class="eyebrow text-brick">Material pledge</p>
+        <h2 class="font-display font-extrabold text-[1.8rem] mt-1.5 tracking-tight leading-none">What can you send?</h2>
+      </div>
+      <button data-close class="font-mono text-[11px] uppercase tracking-widest border-[1.5px] border-ink px-3 py-1.5">Close</button>
+    </div>
+    <p class="mt-4 text-ink/75 leading-relaxed">Nothing is committed by filling this in. We will reply about condition, timing, and shipping before anything moves.</p>
+
+    <form name="material-pledge" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html"
+          class="mt-6 grid gap-4" data-ajax>
+      <input type="hidden" name="form-name" value="material-pledge" />
+      <p hidden><label>Leave this empty <input name="bot-field" /></label></p>
+
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div><label class="label" for="m-name">Your name</label><input class="field" id="m-name" name="name" required /></div>
+        <div><label class="label" for="m-email">Email</label><input class="field" id="m-email" name="email" type="email" required /></div>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div><label class="label" for="m-loc">Where the items are</label><input class="field" id="m-loc" name="location" placeholder="City, country" required /></div>
+        <div>
+          <label class="label" for="m-type">Type of donation</label>
+          <select class="field" id="m-type" name="category" required>
+            <option value="">Choose one</option>
+            <option>Cement, block, or aggregate</option>
+            <option>Steel and rebar</option>
+            <option>Roofing and lumber</option>
+            <option>Plumbing and electrical</option>
+            <option>Tools and equipment</option>
+            <option>Transport or shipping</option>
+            <option>Something else</option>
+          </select>
+        </div>
+      </div>
+      <div><label class="label" for="m-items">What you have, and how much</label><textarea class="field" id="m-items" name="items" rows="4" required placeholder="e.g. 40 bags of cement and a working concrete mixer, available after March"></textarea></div>
+
+      <div class="flex flex-wrap items-center gap-4 pt-1">
+        <button type="submit" class="bg-brick text-cream font-display font-semibold px-7 py-3 hover:bg-[#a2453a] transition-colors">Send pledge</button>
+        <p class="font-mono text-[11px] uppercase tracking-widest" data-status role="status"></p>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- Partnership -->
+<dialog id="partnerDialog" class="w-[min(640px,92vw)] p-0 bg-cream text-ink border-[3px] border-ink">
+  <div class="p-7 sm:p-9">
+    <div class="flex items-start justify-between gap-6">
+      <div>
+        <p class="eyebrow text-brick">Partnership inquiry</p>
+        <h2 class="font-display font-extrabold text-[1.8rem] mt-1.5 tracking-tight leading-none">Let's talk about scale</h2>
+      </div>
+      <button data-close class="font-mono text-[11px] uppercase tracking-widest border-[1.5px] border-ink px-3 py-1.5">Close</button>
+    </div>
+    <p class="mt-4 text-ink/75 leading-relaxed">For organizations that want to sponsor a phase, match employee giving, or contribute expertise.</p>
+
+    <form name="partnership" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html"
+          class="mt-6 grid gap-4" data-ajax>
+      <input type="hidden" name="form-name" value="partnership" />
+      <p hidden><label>Leave this empty <input name="bot-field" /></label></p>
+
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div><label class="label" for="p-org">Organization</label><input class="field" id="p-org" name="organization" required /></div>
+        <div><label class="label" for="p-name">Contact name</label><input class="field" id="p-name" name="name" required /></div>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div><label class="label" for="p-email">Email</label><input class="field" id="p-email" name="email" type="email" required /></div>
+        <div>
+          <label class="label" for="p-kind">Kind of organization</label>
+          <select class="field" id="p-kind" name="org_type" required>
+            <option value="">Choose one</option>
+            <option>Company or corporate giving</option>
+            <option>Non-profit or NGO</option>
+            <option>Church or congregation</option>
+            <option>Diaspora association</option>
+            <option>Foundation or grantmaker</option>
+            <option>Something else</option>
+          </select>
+        </div>
+      </div>
+      <div><label class="label" for="p-msg">What you have in mind</label><textarea class="field" id="p-msg" name="message" rows="4" required placeholder="Sponsorship, in-kind services, engineering support, matching gift program…"></textarea></div>
+
+      <div class="flex flex-wrap items-center gap-4 pt-1">
+        <button type="submit" class="bg-brick text-cream font-display font-semibold px-7 py-3 hover:bg-[#a2453a] transition-colors">Send inquiry</button>
+        <p class="font-mono text-[11px] uppercase tracking-widest" data-status role="status"></p>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- Lightbox -->
+<dialog id="lightbox" class="p-0 bg-transparent border-0 w-[min(1100px,94vw)]">
+  <div class="bg-ink border-[3px] border-cream">
+    <div class="flex items-center justify-between px-4 py-2.5 border-b border-cream/20">
+      <p id="lbCaption" class="font-mono text-[11px] uppercase tracking-widest text-cream/80 pr-4"></p>
+      <button data-close class="font-mono text-[11px] uppercase tracking-widest border border-cream/50 text-cream px-3 py-1.5">Close</button>
+    </div>
+    <div id="lbBody" class="bg-black"></div>
+  </div>
+</dialog>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   Content loading.
+   Every section below reads from /content/*.json, which the admin
+   dashboard writes to. The DEFAULTS object is the fallback so the
+   page still renders correctly if a file is missing or the site is
+   opened straight from disk.
+   ═══════════════════════════════════════════════════════════════ */
+
+const DEFAULTS = {
+  site: {
+    donate_url: "https://www.gofundme.com/f/rebuilding-haiti-one-layer-of-brick-at-a-time",
+    video_id: "zmePAFAUtg8",
+    organizer: "Jocely Emile",
+    contact_email: "hello@rebuildinghaiti.org",
+    hero_eyebrow: "Project log · Phase 5 of 9 complete",
+    hero_headline: "We stopped waiting for someone else to build it.",
+    hero_sub: ""
+  },
+  milestones: { milestones: [
+    { title: "Purchased the land",            detail: "Bought outright and documented, so the project is not building on borrowed ground.", status: "complete" },
+    { title: "Cement block perimeter wall",   detail: "A secure boundary around the full property, laid by local masons.", status: "complete" },
+    { title: "Steel entrance gate",           detail: "Fabricated and hung on site by Haitian steelworkers.", status: "complete" },
+    { title: "Poured the foundation",         detail: "Rebar tied and concrete poured for the main structure.", status: "complete" },
+    { title: "Two 10-foot septic tanks",      detail: "Dug and built for long-term sanitation, not a temporary fix.", status: "complete" },
+    { title: "Walls and columns",             detail: "Block walls and reinforced columns up to roof height.", status: "next" },
+    { title: "Roof slab",                     detail: "Formwork, steel, and the concrete pour that makes it a building.", status: "planned" },
+    { title: "Windows, doors, and finishes",  detail: "Weathertight openings, plaster, and floors.", status: "planned" },
+    { title: "Water and power connections",   detail: "Plumbing tie-in, cistern, and electrical service.", status: "planned" }
+  ]},
+  gallery: { items: [
+    { type: "video", video_url: "https://www.youtube.com/watch?v=zmePAFAUtg8", caption: "Walking the site: wall, gate, foundation, and septic tanks" }
+  ]},
+  updates: { posts: [
+    { title: "Foundation is poured", date: "2025-11-02",
+      body: "The pour went in over two days with a crew of six. Rebar was tied on site and inspected before the concrete arrived.\n\nNext up is block work for the walls and columns. That phase is the one we are raising money for now." },
+    { title: "Both septic tanks are finished", date: "2025-09-14",
+      body: "Two tanks, each ten feet deep, dug by hand and lined. Sanitation is the piece people skip, and it is the piece that decides whether a house is livable in ten years." }
+  ]}
+};
+
+const state = { site: DEFAULTS.site, milestones: [], gallery: [], updates: [] };
+
+async function loadJSON(path, fallback) {
+  try {
+    const r = await fetch(path, { cache: "no-store" });
+    if (!r.ok) throw new Error(r.status);
+    return await r.json();
+  } catch (e) {
+    return fallback;
+  }
+}
+
+/* ---------- small, safe markdown-ish renderer for log posts ---------- */
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function richText(md){
+  return esc(md).split(/\n{2,}/).map(block => {
+    const lines = block.split("\n");
+    if (lines.every(l => /^\s*[-*]\s+/.test(l))) {
+      return "<ul class='list-disc pl-5 space-y-1'>" +
+        lines.map(l => "<li>" + inline(l.replace(/^\s*[-*]\s+/, "")) + "</li>").join("") + "</ul>";
+    }
+    return "<p>" + inline(block.replace(/\n/g, "<br />")) + "</p>";
+  }).join("");
+}
+function inline(t){
+  return t
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a class="underline underline-offset-2 text-brick" href="$2" target="_blank" rel="noopener">$1</a>')
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*([^*]+)\*/g, "<em>$1</em>");
+}
+
+/* ---------- site settings ---------- */
+function applySite(s) {
+  state.site = Object.assign({}, DEFAULTS.site, s || {});
+  document.querySelectorAll("[data-donate]").forEach(a => a.href = state.site.donate_url);
+  document.querySelectorAll("[data-organizer], #organizerName").forEach(el => el.textContent = state.site.organizer);
+  document.querySelectorAll("[data-email]").forEach(a => { a.href = "mailto:" + state.site.contact_email; a.textContent = state.site.contact_email; });
+  if (state.site.hero_eyebrow)  document.getElementById("heroEyebrow").textContent  = state.site.hero_eyebrow;
+  if (state.site.hero_headline) document.getElementById("heroHeadline").textContent = state.site.hero_headline;
+  if (state.site.hero_sub)      document.getElementById("heroSub").textContent      = state.site.hero_sub;
+  if (state.site.video_id) {
+    document.getElementById("videoThumb").src = "https://i.ytimg.com/vi/" + state.site.video_id + "/maxresdefault.jpg";
+  }
+  setupShare();
+}
+
+/* ---------- the wall ---------- */
+function renderWall(list) {
+  state.milestones = list;
+  const wall = document.getElementById("wall");
+  const done = list.filter(m => m.status === "complete").length;
+  document.getElementById("progressLabel").textContent = done + " of " + list.length + " courses laid";
+  document.getElementById("statDone").textContent = done;
+
+  // bottom-up: finished work at the base of the wall
+  wall.innerHTML = list.slice().reverse().map((m, i) => {
+    const n = list.length - i;
+    const built = m.status === "complete";
+    const next = m.status === "next";
+    const badge = built ? "Laid" : next ? "In progress" : "Planned";
+    const badgeClass = built ? "bg-cream text-brick border border-brick"
+                     : next  ? "bg-brick text-cream"
+                             : "bg-mortar text-ink/70";
+    return `
+      <div class="course ${built ? "built-row" : ""} relative border-b-[3px] border-mortar last:border-b-0 min-h-[104px]">
+        <div class="course-face ${built ? "built" : "planned"}"></div>
+        <div class="relative flex flex-wrap items-center gap-x-5 gap-y-2 px-5 sm:px-7 py-6">
+          <span class="c-num font-mono text-[11px] tracking-widest">${String(n).padStart(2,"0")}</span>
+          <div class="flex-1 min-w-[200px]">
+            <h3 class="c-title font-display font-extrabold text-[1.25rem] sm:text-[1.4rem] tracking-tight leading-tight">${esc(m.title)}</h3>
+            <p class="c-detail mt-1 leading-snug text-[.98rem] max-w-[62ch]">${esc(m.detail || "")}</p>
+          </div>
+          <span class="font-mono text-[10px] uppercase tracking-widest px-2.5 py-1 ${badgeClass}">${badge}</span>
+        </div>
+      </div>`;
+  }).join("");
+
+  // lay each course as it scrolls into view
+  const courses = [...wall.querySelectorAll(".course")].reverse(); // base first
+  if (!window.IntersectionObserver) { courses.forEach(c => c.classList.add("is-laid")); return; }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const idx = courses.indexOf(e.target);
+      setTimeout(() => e.target.classList.add("is-laid"), Math.max(0, idx % 4) * 110);
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.35 });
+  courses.forEach(c => io.observe(c));
+}
+
+/* ---------- gallery ---------- */
+function ytId(url) {
+  const m = String(url).match(/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_-]{6,})/);
+  return m ? m[1] : "";
+}
+function renderGallery(items) {
+  state.gallery = items;
+  const grid = document.getElementById("galleryGrid");
+  if (!items.length) {
+    grid.innerHTML = `<p class="sm:col-span-2 lg:col-span-3 border-[3px] border-dashed border-mortar p-10 text-center text-ink/60">
+      No photos yet. An administrator can add construction photos from the dashboard.</p>`;
+    return;
+  }
+  grid.innerHTML = items.map((it, i) => {
+    const isVideo = it.type === "video";
+    const thumb = isVideo ? "https://i.ytimg.com/vi/" + ytId(it.video_url) + "/hqdefault.jpg" : it.image;
+    return `
+      <button class="group relative block w-full aspect-[4/3] overflow-hidden border-[3px] border-ink bg-ink text-left" data-lb="${i}">
+        <img src="${esc(thumb)}" alt="${esc(it.caption || "Construction photo")}" loading="lazy"
+             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+        ${isVideo ? `<span class="absolute inset-0 flex items-center justify-center"><span class="bg-brick text-cream font-display font-semibold px-4 py-2">▶ Play</span></span>` : ``}
+        <span class="absolute left-0 right-0 bottom-0 bg-ink/85 text-cream px-3 py-2 font-mono text-[10px] uppercase tracking-widest">${esc(it.caption || "")}</span>
+      </button>`;
+  }).join("");
+
+  grid.querySelectorAll("[data-lb]").forEach(btn => {
+    btn.addEventListener("click", () => openLightbox(items[+btn.dataset.lb]));
+  });
+}
+function openLightbox(item) {
+  const body = document.getElementById("lbBody");
+  document.getElementById("lbCaption").textContent = item.caption || "";
+  body.innerHTML = item.type === "video"
+    ? `<div class="aspect-video"><iframe class="w-full h-full" src="https://www.youtube.com/embed/${ytId(item.video_url)}?autoplay=1" title="Campaign video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>`
+    : `<img src="${esc(item.image)}" alt="${esc(item.caption || "")}" class="w-full max-h-[78vh] object-contain" />`;
+  document.getElementById("lightbox").showModal();
+}
+
+/* ---------- progress log ---------- */
+function renderUpdates(posts) {
+  state.updates = posts;
+  const wrap = document.getElementById("updatesList");
+  if (!posts.length) {
+    wrap.innerHTML = `<div class="bg-cream p-8 text-ink/60">No updates posted yet.</div>`;
+    return;
+  }
+  wrap.innerHTML = posts.map(p => {
+    const d = p.date ? new Date(p.date + "T12:00:00") : null;
+    const dateStr = d && !isNaN(d) ? d.toLocaleDateString(undefined, { year:"numeric", month:"long", day:"numeric" }) : "";
+    return `
+      <article class="bg-cream p-7 sm:p-9 grid md:grid-cols-[180px_1fr] gap-4 md:gap-8">
+        <p class="eyebrow text-brick md:pt-2">${esc(dateStr)}</p>
+        <div>
+          <h3 class="font-display font-extrabold text-[1.5rem] tracking-tight leading-tight">${esc(p.title)}</h3>
+          <div class="mt-3 space-y-3 leading-relaxed text-ink/85">${richText(p.body || "")}</div>
+        </div>
+      </article>`;
+  }).join("");
+}
+
+/* ---------- sharing ---------- */
+function setupShare() {
+  const url = state.site.donate_url;
+  const text = "Rebuilding Haiti, One Layer of Brick at a Time: land bought, wall up, foundation poured. Help lay the next course.";
+  document.getElementById("shareX").href  = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "&url=" + encodeURIComponent(url);
+  document.getElementById("shareFb").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
+  document.getElementById("shareWa").href = "https://wa.me/?text=" + encodeURIComponent(text + " " + url);
+}
+document.getElementById("copyLink").addEventListener("click", async () => {
+  const status = document.getElementById("copyStatus");
+  try {
+    await navigator.clipboard.writeText(state.site.donate_url);
+    status.textContent = "Link copied";
+  } catch { status.textContent = "Copy failed — the GoFundMe link is in the footer"; }
+  setTimeout(() => status.textContent = "", 3000);
+});
+
+/* ---------- video facade ---------- */
+document.getElementById("playBtn").addEventListener("click", () => {
+  document.getElementById("videoBox").innerHTML =
+    `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${state.site.video_id}?autoplay=1" title="Rebuilding Haiti campaign video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+});
+
+/* ---------- dialogs ---------- */
+document.querySelectorAll("[data-open]").forEach(b =>
+  b.addEventListener("click", () => document.getElementById(b.dataset.open).showModal()));
+document.querySelectorAll("dialog [data-close]").forEach(b =>
+  b.addEventListener("click", () => b.closest("dialog").close()));
+document.querySelectorAll("dialog").forEach(d => {
+  d.addEventListener("close", () => { if (d.id === "lightbox") document.getElementById("lbBody").innerHTML = ""; });
+  d.addEventListener("click", e => { if (e.target === d) d.close(); });
+});
+
+/* ---------- mobile menu ---------- */
+const menuBtn = document.getElementById("menuBtn"), mobileMenu = document.getElementById("mobileMenu");
+menuBtn.addEventListener("click", () => {
+  const open = menuBtn.getAttribute("aria-expanded") === "true";
+  menuBtn.setAttribute("aria-expanded", String(!open));
+  mobileMenu.hidden = open;
+  menuBtn.textContent = open ? "Menu" : "Close";
+});
+mobileMenu.addEventListener("click", e => {
+  if (e.target.tagName === "A") { mobileMenu.hidden = true; menuBtn.setAttribute("aria-expanded","false"); menuBtn.textContent = "Menu"; }
+});
+
+/* ---------- forms (Netlify Forms, submitted without leaving the page) ---------- */
+document.querySelectorAll("form[data-ajax]").forEach(form => {
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const status = form.querySelector("[data-status]");
+    const btn = form.querySelector("button[type=submit]");
+    status.textContent = "Sending…"; status.className = "font-mono text-[11px] uppercase tracking-widest text-ink/60";
+    btn.disabled = true;
+    try {
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(new FormData(form)).toString()
+      });
+      if (!res.ok) throw new Error(res.status);
+      form.reset();
+      status.textContent = "Received. We will be in touch.";
+      status.className = "font-mono text-[11px] uppercase tracking-widest text-brick";
+    } catch {
+      status.textContent = "That did not send. Email us instead: " + state.site.contact_email;
+      status.className = "font-mono text-[11px] uppercase tracking-widest text-brick";
+    } finally { btn.disabled = false; }
+  });
+});
+
+/* ---------- scroll reveals ---------- */
+if (window.IntersectionObserver) {
+  const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("shown"); ro.unobserve(e.target); }}), { threshold: .12 });
+  document.querySelectorAll(".reveal").forEach(el => ro.observe(el));
+}
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* ---------- boot ---------- */
+(async function init() {
+  const [site, ms, gal, up] = await Promise.all([
+    loadJSON("/content/site.json",       DEFAULTS.site),
+    loadJSON("/content/milestones.json", DEFAULTS.milestones),
+    loadJSON("/content/gallery.json",    DEFAULTS.gallery),
+    loadJSON("/content/updates.json",    DEFAULTS.updates)
+  ]);
+  applySite(site);
+  renderWall((ms && ms.milestones) || DEFAULTS.milestones.milestones);
+  renderGallery((gal && gal.items) || DEFAULTS.gallery.items);
+  renderUpdates((up && up.posts) || DEFAULTS.updates.posts);
+})();
+</script>
+</body>
+</html>

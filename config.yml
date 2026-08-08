@@ -1,0 +1,131 @@
+# ════════════════════════════════════════════════════════════════════
+#  Rebuilding Haiti — dashboard configuration
+#
+#  This file decides what the administrator sees when they log in at
+#  yoursite.com/admin. Editing it is a developer job; the organizer
+#  never needs to open it.
+# ════════════════════════════════════════════════════════════════════
+
+# ── STEP 1 of setup: sign-in ────────────────────────────────────────
+# Pick ONE of the two blocks below. The deployment guide explains both.
+#
+# Option A (recommended) — DecapBridge. The organizer signs in with an
+# email and password, or with Google, and never needs a GitHub account.
+# Create a free site at https://decapbridge.com, then replace this whole
+# `backend:` block with the one DecapBridge generates for you.
+#
+# Option B — GitHub sign-in. Simplest to configure, but every person who
+# edits the site needs a GitHub account with access to the repository.
+
+backend:
+  name: github
+  repo: YOUR-GITHUB-USERNAME/rebuilding-haiti   # ← change this
+  branch: main
+
+# ── STEP 2 of setup: where uploaded photos go ───────────────────────
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+# Friendly commit messages in the repository history
+site_url: https://YOUR-SITE.netlify.app
+display_url: https://YOUR-SITE.netlify.app
+publish_mode: simple
+
+collections:
+
+  # ══════════════════════════════════════════════════════════════════
+  # 1. MILESTONES — the wall on the home page
+  # ══════════════════════════════════════════════════════════════════
+  - name: milestones
+    label: "Build progress"
+    files:
+      - name: milestones
+        label: "Milestones and upcoming phases"
+        file: "content/milestones.json"
+        description: "Drag phases to reorder them. The home page counts how many are marked Completed."
+        fields:
+          - name: milestones
+            label: "Construction phases"
+            widget: list
+            label_singular: "Phase"
+            summary: "{{fields.title}} — {{fields.status}}"
+            fields:
+              - { name: title,  label: "Phase name", widget: string }
+              - { name: detail, label: "One-line description", widget: text, required: false }
+              - name: status
+                label: "Status"
+                widget: select
+                default: planned
+                options:
+                  - { label: "Completed", value: complete }
+                  - { label: "Working on it now", value: next }
+                  - { label: "Planned", value: planned }
+
+  # ══════════════════════════════════════════════════════════════════
+  # 2. GALLERY — photos and videos
+  # ══════════════════════════════════════════════════════════════════
+  - name: gallery
+    label: "Photo and video gallery"
+    files:
+      - name: gallery
+        label: "Gallery items"
+        file: "content/gallery.json"
+        description: "Add photos by dragging a file into the upload box. Add videos by pasting a YouTube link."
+        fields:
+          - name: items
+            label: "Gallery"
+            widget: list
+            label_singular: "Item"
+            summary: "{{fields.caption}}"
+            types:
+              - name: photo
+                label: "Photo"
+                widget: object
+                fields:
+                  - { name: image,   label: "Photo", widget: image }
+                  - { name: caption, label: "Caption", widget: string }
+              - name: video
+                label: "Video"
+                widget: object
+                fields:
+                  - { name: video_url, label: "YouTube link", widget: string, pattern: ['youtu', "Paste a link that contains youtube.com or youtu.be"] }
+                  - { name: caption,   label: "Caption", widget: string }
+
+  # ══════════════════════════════════════════════════════════════════
+  # 3. PROGRESS LOG — short news posts
+  # ══════════════════════════════════════════════════════════════════
+  - name: updates
+    label: "Progress log"
+    files:
+      - name: updates
+        label: "Posts"
+        file: "content/updates.json"
+        description: "Newest post first. Keep entries short — a paragraph or two and what happens next."
+        fields:
+          - name: posts
+            label: "Posts"
+            widget: list
+            label_singular: "Post"
+            summary: "{{fields.date}} — {{fields.title}}"
+            fields:
+              - { name: title, label: "Headline", widget: string }
+              - { name: date,  label: "Date", widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+              - { name: body,  label: "What happened", widget: text }
+
+  # ══════════════════════════════════════════════════════════════════
+  # 4. SETTINGS — links, names, headline
+  # ══════════════════════════════════════════════════════════════════
+  - name: settings
+    label: "Site settings"
+    files:
+      - name: site
+        label: "Links and headline"
+        file: "content/site.json"
+        fields:
+          - { name: donate_url,    label: "GoFundMe link", widget: string }
+          - { name: video_id,      label: "YouTube video ID", widget: string, hint: "The part after v= in the YouTube address, e.g. zmePAFAUtg8" }
+          - { name: organizer,     label: "Organizer name", widget: string }
+          - { name: contact_email, label: "Contact email", widget: string }
+          - { name: hero_eyebrow,  label: "Small line above the headline", widget: string, required: false }
+          - { name: hero_headline, label: "Main headline", widget: string }
+          - { name: hero_sub,      label: "Opening paragraph", widget: text, required: false, hint: "Leave empty to keep the wording that ships with the site." }

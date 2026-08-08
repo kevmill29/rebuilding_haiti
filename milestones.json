@@ -1,0 +1,49 @@
+{
+  "milestones": [
+    {
+      "title": "Purchased the land",
+      "detail": "Bought outright and documented, so the project is not building on borrowed ground.",
+      "status": "complete"
+    },
+    {
+      "title": "Cement block perimeter wall",
+      "detail": "A secure boundary around the full property, laid by local masons.",
+      "status": "complete"
+    },
+    {
+      "title": "Steel entrance gate",
+      "detail": "Fabricated and hung on site by Haitian steelworkers.",
+      "status": "complete"
+    },
+    {
+      "title": "Poured the foundation",
+      "detail": "Rebar tied and concrete poured for the main structure.",
+      "status": "complete"
+    },
+    {
+      "title": "Two 10-foot septic tanks",
+      "detail": "Dug and built for long-term sanitation, not a temporary fix.",
+      "status": "complete"
+    },
+    {
+      "title": "Walls and columns",
+      "detail": "Block walls and reinforced columns up to roof height.",
+      "status": "next"
+    },
+    {
+      "title": "Roof slab",
+      "detail": "Formwork, steel, and the concrete pour that makes it a building.",
+      "status": "planned"
+    },
+    {
+      "title": "Windows, doors, and finishes",
+      "detail": "Weathertight openings, plaster, and floors.",
+      "status": "planned"
+    },
+    {
+      "title": "Water and power connections",
+      "detail": "Plumbing tie-in, cistern, and electrical service.",
+      "status": "planned"
+    }
+  ]
+}
