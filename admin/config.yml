@@ -19,7 +19,7 @@
 
 backend:
   name: github
-  repo: YOUR-GITHUB-USERNAME/rebuilding-haiti   # ← change this
+  repo: kevmill29/rebuilding_haiti
   branch: main
 
 # ── STEP 2 of setup: where uploaded photos go ───────────────────────
@@ -27,8 +27,8 @@ media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
 
 # Friendly commit messages in the repository history
-site_url: https://YOUR-SITE.netlify.app
-display_url: https://YOUR-SITE.netlify.app
+site_url: https://touninlakay.com
+display_url: https://touninlakay.com
 publish_mode: simple
 
 collections:
