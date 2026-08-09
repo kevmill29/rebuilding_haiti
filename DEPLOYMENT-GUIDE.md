@@ -119,6 +119,17 @@ To add a phase that is not listed, click **Add Phase**, give it a name and a one
 
 Two things make these read well: say what physically happened, and say what comes next. People give money to a project that is clearly still moving.
 
+### Thank a donor
+
+GoFundMe does not give this site a way to pull in donor names automatically — there is no button that makes this happen by itself. GoFundMe does email you every time someone gives, so that email is your cue:
+
+1. Click **Supporters wall**.
+2. Click **Add Supporter** and drag it to the top of the list.
+3. Type the name the way it appeared on GoFundMe (or "Anonymous" if they gave anonymously). A short note is optional — "In honor of Grandma" or "Covered a week of masons" both work well.
+4. Click **Publish**.
+
+It takes under a minute per donor and the name appears on the site as soon as it publishes.
+
 ### See who signed up or offered to help
 
 This one is on Netlify, not the dashboard. Sign in at [netlify.com](https://www.netlify.com), open the site, and click **Forms** in the sidebar. You will see three lists:

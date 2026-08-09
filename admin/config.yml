@@ -127,7 +127,27 @@ collections:
               - { name: body,  label: "What happened", widget: text }
 
   # ══════════════════════════════════════════════════════════════════
-  # 4. SETTINGS — links, names, headline
+  # 4. SUPPORTERS — the thank-you wall
+  # ══════════════════════════════════════════════════════════════════
+  - name: supporters
+    label: "Supporters wall"
+    files:
+      - name: supporters
+        label: "Supporters"
+        file: "content/supporters.json"
+        description: "GoFundMe does not let this site pull donor names automatically, so add each one here. GoFundMe emails you when someone gives — that is the moment to add them. Newest at the top."
+        fields:
+          - name: supporters
+            label: "Supporters"
+            widget: list
+            label_singular: "Supporter"
+            summary: "{{fields.name}}"
+            fields:
+              - { name: name, label: "Name to display", widget: string, hint: "Use what the donor gave on GoFundMe, or \"Anonymous\" if they asked not to be named." }
+              - { name: note, label: "Short note", widget: string, required: false, hint: "Optional. e.g. \"In honor of Grandma\" or \"Covered a week of masons.\"" }
+
+  # ══════════════════════════════════════════════════════════════════
+  # 5. SETTINGS — links, names, headline
   # ══════════════════════════════════════════════════════════════════
   - name: settings
     label: "Site settings"

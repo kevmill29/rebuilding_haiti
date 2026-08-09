@@ -16,6 +16,7 @@ content/*.json        All editable content, fetched at page load
   milestones.json       Build phases and their status
   gallery.json          Photos and videos (one list; the page splits them into a Photos section and a Videos section by type)
   updates.json          Progress log posts
+  supporters.json       Thank-you wall — added by hand, since GoFundMe has no public API for donor data
 admin/index.html      Mounts Decap CMS
 admin/config.yml      Defines the dashboard's editing screens
 assets/uploads/       Images uploaded through the dashboard

@@ -131,6 +131,7 @@ tailwind.config = {
       <li><a class="hover:text-brick" href="#updates">Updates</a></li>
       <li><a class="hover:text-brick" href="#videos">Videos</a></li>
       <li><a class="hover:text-brick" href="#gallery">Gallery</a></li>
+      <li><a class="hover:text-brick" href="#supporters">Supporters</a></li>
       <li><a class="hover:text-brick" href="#help">Ways to help</a></li>
       <li><a class="hover:text-brick" href="#contact">Contact</a></li>
     </ul>
@@ -151,6 +152,7 @@ tailwind.config = {
       <li><a class="block py-2.5 border-b border-mortar" href="#updates">Updates</a></li>
       <li><a class="block py-2.5 border-b border-mortar" href="#videos">Videos</a></li>
       <li><a class="block py-2.5 border-b border-mortar" href="#gallery">Gallery</a></li>
+      <li><a class="block py-2.5 border-b border-mortar" href="#supporters">Supporters</a></li>
       <li><a class="block py-2.5 border-b border-mortar" href="#help">Ways to help</a></li>
       <li><a class="block py-2.5 border-b border-mortar" href="#contact">Contact</a></li>
       <li><a data-donate class="block py-3 mt-2 bg-brick text-cream text-center" href="#" target="_blank" rel="noopener">Donate on GoFundMe</a></li>
@@ -365,6 +367,20 @@ tailwind.config = {
     <div id="galleryGrid" class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
   </div>
 </section>
+
+<div class="mortar-rule"></div>
+
+<!-- ══════════════════ SUPPORTERS ══════════════════ -->
+<section id="supporters" class="mx-auto max-w-6xl px-5 py-16 md:py-24">
+  <p class="eyebrow text-brick reveal">Thank you</p>
+  <h2 class="font-display font-extrabold tracking-[-0.03em] text-[2.1rem] sm:text-[2.8rem] mt-3 reveal">People who made this possible</h2>
+  <p class="mt-3 text-ink/75 max-w-[52ch] text-[1.05rem] leading-relaxed reveal">
+    Every name here gave through GoFundMe to move this build forward. Added by hand, one at a time, so nobody gets missed.
+  </p>
+  <div id="supportersWall" class="mt-10 flex flex-wrap gap-3"></div>
+</section>
+
+<div class="mortar-rule"></div>
 
 <!-- ══════════════════ WAYS TO HELP ══════════════════ -->
 <section id="help" class="mx-auto max-w-6xl px-5 py-16 md:py-24">
@@ -640,10 +656,11 @@ const DEFAULTS = {
       body: "The pour went in over two days with a crew of six. Rebar was tied on site and inspected before the concrete arrived.\n\nNext up is block work for the walls and columns. That phase is the one we are raising money for now." },
     { title: "Both septic tanks are finished", date: "2025-09-14",
       body: "Two tanks, each ten feet deep, dug by hand and lined. Sanitation is the piece people skip, and it is the piece that decides whether a house is livable in ten years." }
-  ]}
+  ]},
+  supporters: { supporters: [] }
 };
 
-const state = { site: DEFAULTS.site, milestones: [], gallery: [], updates: [] };
+const state = { site: DEFAULTS.site, milestones: [], gallery: [], updates: [], supporters: [] };
 
 async function loadJSON(path, fallback) {
   try {
@@ -800,6 +817,22 @@ function renderUpdates(posts) {
   }).join("");
 }
 
+/* ---------- supporters wall ---------- */
+function renderSupporters(list) {
+  state.supporters = list;
+  const wall = document.getElementById("supportersWall");
+  if (!list.length) {
+    wall.innerHTML = `<p class="border-[3px] border-dashed border-mortar p-10 text-center text-ink/60 w-full">
+      No supporters listed yet. An administrator can add one from the dashboard after each GoFundMe donation.</p>`;
+    return;
+  }
+  wall.innerHTML = list.map(s => `
+    <span class="inline-flex items-baseline gap-2 bg-sand border-[1.5px] border-ink px-4 py-2.5">
+      <span class="font-display font-semibold text-[1rem]">${esc(s.name)}</span>
+      ${s.note ? `<span class="font-mono text-[11px] text-ink/60">— ${esc(s.note)}</span>` : ``}
+    </span>`).join("");
+}
+
 /* ---------- sharing ---------- */
 function setupShare() {
   const url = state.site.donate_url;
@@ -880,16 +913,18 @@ document.getElementById("year").textContent = new Date().getFullYear();
 
 /* ---------- boot ---------- */
 (async function init() {
-  const [site, ms, gal, up] = await Promise.all([
+  const [site, ms, gal, up, sup] = await Promise.all([
     loadJSON("/content/site.json",       DEFAULTS.site),
     loadJSON("/content/milestones.json", DEFAULTS.milestones),
     loadJSON("/content/gallery.json",    DEFAULTS.gallery),
-    loadJSON("/content/updates.json",    DEFAULTS.updates)
+    loadJSON("/content/updates.json",    DEFAULTS.updates),
+    loadJSON("/content/supporters.json", DEFAULTS.supporters)
   ]);
   applySite(site);
   renderWall((ms && ms.milestones) || DEFAULTS.milestones.milestones);
   renderGallery((gal && gal.items) || DEFAULTS.gallery.items);
   renderUpdates((up && up.posts) || DEFAULTS.updates.posts);
+  renderSupporters((sup && sup.supporters) || DEFAULTS.supporters.supporters);
 })();
 </script>
 </body>
