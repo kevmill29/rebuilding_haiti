@@ -13,6 +13,8 @@
 <meta property="og:image" content="https://i.ytimg.com/vi/zmePAFAUtg8/maxresdefault.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23B85042'/%3E%3Cg stroke='%23F7F6EE' stroke-width='2'%3E%3Cline x1='0' y1='11' x2='32' y2='11'/%3E%3Cline x1='0' y1='22' x2='32' y2='22'/%3E%3Cline x1='16' y1='0' x2='16' y2='11'/%3E%3Cline x1='8' y1='11' x2='8' y2='22'/%3E%3Cline x1='24' y1='11' x2='24' y2='22'/%3E%3Cline x1='16' y1='22' x2='16' y2='32'/%3E%3C/g%3E%3C/svg%3E" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -126,6 +128,8 @@ tailwind.config = {
       <li><a class="hover:text-brick" href="#story">Story</a></li>
       <li><a class="hover:text-brick" href="#milestones">Milestones</a></li>
       <li><a class="hover:text-brick" href="#impact">Economic impact</a></li>
+      <li><a class="hover:text-brick" href="#updates">Updates</a></li>
+      <li><a class="hover:text-brick" href="#videos">Videos</a></li>
       <li><a class="hover:text-brick" href="#gallery">Gallery</a></li>
       <li><a class="hover:text-brick" href="#help">Ways to help</a></li>
       <li><a class="hover:text-brick" href="#contact">Contact</a></li>
@@ -144,6 +148,8 @@ tailwind.config = {
       <li><a class="block py-2.5 border-b border-mortar" href="#story">Story</a></li>
       <li><a class="block py-2.5 border-b border-mortar" href="#milestones">Milestones</a></li>
       <li><a class="block py-2.5 border-b border-mortar" href="#impact">Economic impact</a></li>
+      <li><a class="block py-2.5 border-b border-mortar" href="#updates">Updates</a></li>
+      <li><a class="block py-2.5 border-b border-mortar" href="#videos">Videos</a></li>
       <li><a class="block py-2.5 border-b border-mortar" href="#gallery">Gallery</a></li>
       <li><a class="block py-2.5 border-b border-mortar" href="#help">Ways to help</a></li>
       <li><a class="block py-2.5 border-b border-mortar" href="#contact">Contact</a></li>
@@ -151,6 +157,12 @@ tailwind.config = {
     </ul>
   </div>
 </header>
+
+<!-- ══════════════════ FLOATING DONATE CTA ══════════════════ -->
+<a data-donate href="#" target="_blank" rel="noopener" aria-label="Donate on GoFundMe — opens in a new tab"
+   class="fixed z-30 bottom-5 right-5 flex items-center gap-2 bg-brick text-cream font-display font-semibold text-[.95rem] px-5 py-3.5 border-[2px] border-ink shadow-[0_6px_22px_rgba(36,31,27,.4)] hover:bg-[#a2453a] transition-colors">
+  <span aria-hidden="true">&#9829;</span> Donate on GoFundMe
+</a>
 
 <main id="top">
 
@@ -216,12 +228,12 @@ tailwind.config = {
 <!-- ══════════════════ STORY ══════════════════ -->
 <section id="story" class="bg-sand">
   <div class="mx-auto max-w-6xl px-5 py-16 md:py-24">
-    <p class="eyebrow text-brick">Why we are building</p>
+    <p class="eyebrow text-brick reveal">Why we are building</p>
     <div class="grid lg:grid-cols-[1fr_1fr] gap-10 lg:gap-16 mt-4">
-      <h2 class="font-display font-extrabold tracking-[-0.03em] leading-[1.0] text-[2.1rem] sm:text-[2.7rem]">
+      <h2 class="font-display font-extrabold tracking-[-0.03em] leading-[1.0] text-[2.1rem] sm:text-[2.7rem] reveal">
         You should not feel like a tourist in your own land.
       </h2>
-      <div class="space-y-5 text-[1.08rem] leading-[1.7] text-ink/85">
+      <div class="space-y-5 text-[1.08rem] leading-[1.7] text-ink/85 reveal">
         <p>
           Many of us left Haiti carrying an address we can no longer go back to. Family land sits
           empty or unsafe. When we visit, we sleep in rented rooms in our own country and leave
@@ -253,7 +265,7 @@ tailwind.config = {
 <!-- ══════════════════ MILESTONES: THE WALL ══════════════════ -->
 <section id="milestones" class="mx-auto max-w-6xl px-5 py-16 md:py-24">
   <div class="flex flex-wrap items-end justify-between gap-6">
-    <div>
+    <div class="reveal">
       <p class="eyebrow text-brick">Build progress</p>
       <h2 class="font-display font-extrabold tracking-[-0.03em] leading-[1.0] text-[2.1rem] sm:text-[2.8rem] mt-3">
         The wall, course by course
@@ -276,17 +288,17 @@ tailwind.config = {
 <!-- ══════════════════ ECONOMIC IMPACT ══════════════════ -->
 <section id="impact" class="bg-palm/25">
   <div class="mx-auto max-w-6xl px-5 py-16 md:py-24">
-    <p class="eyebrow text-brick">Where the money lands</p>
-    <h2 class="font-display font-extrabold tracking-[-0.03em] leading-[1.0] text-[2.1rem] sm:text-[2.8rem] mt-3 max-w-[20ch]">
+    <p class="eyebrow text-brick reveal">Where the money lands</p>
+    <h2 class="font-display font-extrabold tracking-[-0.03em] leading-[1.0] text-[2.1rem] sm:text-[2.8rem] mt-3 max-w-[20ch] reveal">
       Five trades, paid on site, in Haiti.
     </h2>
-    <p class="mt-4 max-w-[54ch] text-[1.05rem] leading-relaxed text-ink/80">
+    <p class="mt-4 max-w-[54ch] text-[1.05rem] leading-relaxed text-ink/80 reveal">
       Construction money moves through a community faster than almost anything else. A day of block
       work becomes a day of school fees, a market run, a fuel tank. These are the people the build
       pays.
     </p>
 
-    <ul class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-mortar border-[3px] border-ink">
+    <ul class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-mortar border-[3px] border-ink reveal">
       <li class="bg-cream p-7">
         <p class="eyebrow text-brick">Trade 01</p>
         <h3 class="font-display font-extrabold text-[1.45rem] mt-2 tracking-tight">Masons</h3>
@@ -326,9 +338,21 @@ tailwind.config = {
 
 <!-- ══════════════════ PROGRESS LOG ══════════════════ -->
 <section id="updates" class="mx-auto max-w-6xl px-5 py-16 md:py-24">
-  <p class="eyebrow text-brick">From the site</p>
-  <h2 class="font-display font-extrabold tracking-[-0.03em] text-[2.1rem] sm:text-[2.8rem] mt-3">Progress log</h2>
+  <p class="eyebrow text-brick reveal">From the site</p>
+  <h2 class="font-display font-extrabold tracking-[-0.03em] text-[2.1rem] sm:text-[2.8rem] mt-3 reveal">Progress log</h2>
   <div id="updatesList" class="mt-10 grid gap-px bg-mortar border-[3px] border-ink"></div>
+</section>
+
+<div class="mortar-rule"></div>
+
+<!-- ══════════════════ VIDEOS ══════════════════ -->
+<section id="videos" class="mx-auto max-w-6xl px-5 py-16 md:py-24">
+  <p class="eyebrow text-brick reveal">Watch the build</p>
+  <h2 class="font-display font-extrabold tracking-[-0.03em] text-[2.1rem] sm:text-[2.8rem] mt-3 reveal">Videos from the site</h2>
+  <p class="mt-3 text-ink/75 max-w-[52ch] text-[1.05rem] leading-relaxed reveal">
+    Walkthroughs, milestone footage, and updates straight from the crew. An administrator can add a new one any time by pasting a YouTube link.
+  </p>
+  <div id="videosGrid" class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 </section>
 
 <div class="mortar-rule"></div>
@@ -336,20 +360,20 @@ tailwind.config = {
 <!-- ══════════════════ GALLERY ══════════════════ -->
 <section id="gallery" class="bg-sand">
   <div class="mx-auto max-w-6xl px-5 py-16 md:py-24">
-    <p class="eyebrow text-brick">Documentation</p>
-    <h2 class="font-display font-extrabold tracking-[-0.03em] text-[2.1rem] sm:text-[2.8rem] mt-3">Photos and video from the build</h2>
+    <p class="eyebrow text-brick reveal">Documentation</p>
+    <h2 class="font-display font-extrabold tracking-[-0.03em] text-[2.1rem] sm:text-[2.8rem] mt-3 reveal">Photos from the build</h2>
     <div id="galleryGrid" class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
   </div>
 </section>
 
 <!-- ══════════════════ WAYS TO HELP ══════════════════ -->
 <section id="help" class="mx-auto max-w-6xl px-5 py-16 md:py-24">
-  <p class="eyebrow text-brick">Three ways in</p>
-  <h2 class="font-display font-extrabold tracking-[-0.03em] text-[2.1rem] sm:text-[2.8rem] mt-3 max-w-[18ch]">
+  <p class="eyebrow text-brick reveal">Three ways in</p>
+  <h2 class="font-display font-extrabold tracking-[-0.03em] text-[2.1rem] sm:text-[2.8rem] mt-3 max-w-[18ch] reveal">
     Money, materials, or a partnership.
   </h2>
 
-  <div class="mt-12 grid lg:grid-cols-3 gap-6">
+  <div class="mt-12 grid lg:grid-cols-3 gap-6 reveal">
 
     <!-- Tier 1 -->
     <article class="border-[3px] border-ink bg-brick text-cream p-8 flex flex-col">
@@ -715,29 +739,35 @@ function ytId(url) {
   const m = String(url).match(/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_-]{6,})/);
   return m ? m[1] : "";
 }
-function renderGallery(items) {
-  state.gallery = items;
-  const grid = document.getElementById("galleryGrid");
+function renderMediaGrid(gridEl, items, emptyMessage) {
   if (!items.length) {
-    grid.innerHTML = `<p class="sm:col-span-2 lg:col-span-3 border-[3px] border-dashed border-mortar p-10 text-center text-ink/60">
-      No photos yet. An administrator can add construction photos from the dashboard.</p>`;
+    gridEl.innerHTML = `<p class="sm:col-span-2 lg:col-span-3 border-[3px] border-dashed border-mortar p-10 text-center text-ink/60">${emptyMessage}</p>`;
     return;
   }
-  grid.innerHTML = items.map((it, i) => {
+  gridEl.innerHTML = items.map((it, i) => {
     const isVideo = it.type === "video";
     const thumb = isVideo ? "https://i.ytimg.com/vi/" + ytId(it.video_url) + "/hqdefault.jpg" : it.image;
     return `
       <button class="group relative block w-full aspect-[4/3] overflow-hidden border-[3px] border-ink bg-ink text-left" data-lb="${i}">
-        <img src="${esc(thumb)}" alt="${esc(it.caption || "Construction photo")}" loading="lazy"
+        <img src="${esc(thumb)}" alt="${esc(it.caption || (isVideo ? "Video from the build" : "Construction photo"))}" loading="lazy"
              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
         ${isVideo ? `<span class="absolute inset-0 flex items-center justify-center"><span class="bg-brick text-cream font-display font-semibold px-4 py-2">▶ Play</span></span>` : ``}
         <span class="absolute left-0 right-0 bottom-0 bg-ink/85 text-cream px-3 py-2 font-mono text-[10px] uppercase tracking-widest">${esc(it.caption || "")}</span>
       </button>`;
   }).join("");
 
-  grid.querySelectorAll("[data-lb]").forEach(btn => {
+  gridEl.querySelectorAll("[data-lb]").forEach(btn => {
     btn.addEventListener("click", () => openLightbox(items[+btn.dataset.lb]));
   });
+}
+function renderGallery(items) {
+  state.gallery = items;
+  const photos = items.filter(it => it.type !== "video");
+  const videos = items.filter(it => it.type === "video");
+  renderMediaGrid(document.getElementById("galleryGrid"), photos,
+    "No photos yet. An administrator can add construction photos from the dashboard.");
+  renderMediaGrid(document.getElementById("videosGrid"), videos,
+    "No videos yet. An administrator can add one from the dashboard by pasting a YouTube link.");
 }
 function openLightbox(item) {
   const body = document.getElementById("lbBody");

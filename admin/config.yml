@@ -70,7 +70,7 @@ collections:
       - name: gallery
         label: "Gallery items"
         file: "content/gallery.json"
-        description: "Add photos by dragging a file into the upload box. Add videos by pasting a YouTube link."
+        description: "One list for both. Add a photo by dragging a file into the upload box, or add a video by pasting a YouTube link. The site sorts them automatically — photos show in the Photos section, videos show in their own Videos section."
         fields:
           - name: items
             label: "Gallery"

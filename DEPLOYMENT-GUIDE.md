@@ -98,7 +98,7 @@ Everything below happens at **yoursite.com/admin**. Sign in with your email and 
 4. Write a short caption. Say what it is, not how it makes you feel — "Steel gate installed, March 2025" works better than "Amazing progress."
 5. Click **Publish**.
 
-To add a video instead, choose **Video** and paste the YouTube address. To remove something, click the trash icon next to it. To reorder, drag the handle on the left.
+To add a video instead, choose **Video** and paste the YouTube address. The site sorts these for you automatically — photos land in the Photos section, videos land in their own Videos section, both linked from the top menu. To remove something, click the trash icon next to it. To reorder, drag the handle on the left.
 
 ### Mark a phase as finished
 
@@ -132,6 +132,8 @@ Click any of them to read the submissions, and use **Export CSV** to download th
 ### Change the GoFundMe link, the video, or the headline
 
 Click **Site settings**. Everything there is a plain text box. The YouTube video ID is the code in the address after `v=` — in `youtube.com/watch?v=zmePAFAUtg8`, the ID is `zmePAFAUtg8`.
+
+The **GoFundMe link** you set here drives every donate button on the site, including the one that stays pinned to the bottom-right corner of the screen while a visitor scrolls. You do not need to add or edit that button anywhere — it always points at whatever link is in Site settings.
 
 ---
 
