@@ -439,6 +439,26 @@ tailwind.config = {
     </article>
   </div>
 
+  <!-- Direct giving: hidden entirely until at least one handle is set in the dashboard -->
+  <div id="directGiving" hidden class="mt-6 border-[3px] border-ink bg-sand p-8 sm:p-10 reveal">
+    <div class="grid lg:grid-cols-[1fr_1.4fr] gap-8 lg:gap-14 items-start">
+      <div>
+        <p class="eyebrow text-brick">Send directly</p>
+        <h3 class="font-display font-extrabold text-[1.9rem] mt-2 tracking-tight leading-none">Give Jocely the full amount</h3>
+        <p id="givingIntro" class="mt-4 text-ink/80 leading-relaxed"></p>
+      </div>
+
+      <div>
+        <ul id="givingList" class="grid sm:grid-cols-2 gap-3"></ul>
+        <p class="mt-5 text-[.92rem] leading-relaxed text-ink/60 max-w-[52ch]">
+          These go straight to Jocely Emile and are treated as personal gifts, not charitable donations.
+          There is no refund process, so send only if you know the family. If you would rather have a
+          receipt and a public record, use GoFundMe above.
+        </p>
+      </div>
+    </div>
+  </div>
+
   <!-- Newsletter + share -->
   <div class="mt-6 grid lg:grid-cols-[1.25fr_1fr] gap-6">
     <div class="border-[3px] border-ink bg-palm/30 p-8">
@@ -657,7 +677,11 @@ const DEFAULTS = {
     { title: "Both septic tanks are finished", date: "2025-09-14",
       body: "Two tanks, each ten feet deep, dug by hand and lined. Sanitation is the piece people skip, and it is the piece that decides whether a house is livable in ten years." }
   ]},
-  supporters: { supporters: [] }
+  supporters: { supporters: [] },
+  giving: {
+    intro: "If you know the family, sending money directly means the full amount arrives. Card processing takes about three percent of every GoFundMe donation, and these routes skip it entirely.",
+    zelle: "", cashapp: "", venmo: "", paypal: ""
+  }
 };
 
 const state = { site: DEFAULTS.site, milestones: [], gallery: [], updates: [], supporters: [] };
@@ -833,6 +857,73 @@ function renderSupporters(list) {
     </span>`).join("");
 }
 
+/* ---------- direct giving ---------- */
+// Jocely may type a bare handle or paste a whole URL. Accept either.
+function handleOnly(v, hosts) {
+  v = String(v || "").trim();
+  if (!v) return "";
+  if (/^https?:\/\//i.test(v) || hosts.some(h => v.toLowerCase().startsWith(h))) {
+    v = v.replace(/^https?:\/\//i, "").split("/").slice(1).join("/");
+  }
+  return v.replace(/^u\//i, "")          // venmo.com/u/name -> name
+          .replace(/^paypalme\//i, "")   // paypal.com/paypalme/name -> name
+          .replace(/^[@$]/, "")
+          .replace(/\/+$/, "")
+          .split(/[?#]/)[0]              // drop any tracking query string
+          .trim();
+}
+
+function renderGiving(g) {
+  g = g || {};
+  const out = [];
+
+  const cashapp = handleOnly(g.cashapp, ["cash.app"]);
+  const venmo   = handleOnly(g.venmo,   ["venmo.com", "www.venmo.com"]);
+  const paypal  = handleOnly(g.paypal,  ["paypal.me", "www.paypal.me", "paypal.com"]);
+  const zelle   = String(g.zelle || "").trim();
+
+  // Zelle has no web link -- it is an email or phone entered inside a banking app,
+  // so it gets a copy button rather than a link that goes nowhere useful.
+  if (zelle)   out.push({ kind: "copy", label: "Zelle", value: zelle, sub: zelle });
+  if (cashapp) out.push({ kind: "link", label: "Cash App", href: "https://cash.app/$" + encodeURIComponent(cashapp), sub: "$" + cashapp });
+  if (venmo)   out.push({ kind: "link", label: "Venmo",    href: "https://venmo.com/u/" + encodeURIComponent(venmo), sub: "@" + venmo });
+  if (paypal)  out.push({ kind: "link", label: "PayPal",   href: "https://paypal.me/" + encodeURIComponent(paypal), sub: "paypal.me/" + paypal });
+
+  const wrap = document.getElementById("directGiving");
+  if (!wrap) return;
+  if (!out.length) { wrap.hidden = true; return; }   // nothing configured, section stays off
+  wrap.hidden = false;
+
+  document.getElementById("givingIntro").textContent = g.intro || "";
+
+  document.getElementById("givingList").innerHTML = out.map(o => {
+    const inner = `
+      <span class="font-display font-extrabold text-[1.15rem] tracking-tight block">${esc(o.label)}</span>
+      <span class="font-mono text-[11px] tracking-wide text-ink/60 block mt-1 break-all">${esc(o.sub)}</span>`;
+    return o.kind === "link"
+      ? `<li><a href="${esc(o.href)}" target="_blank" rel="noopener"
+             class="block border-[2px] border-ink bg-cream px-5 py-4 hover:bg-brick hover:text-cream hover:border-brick transition-colors">
+             ${inner}</a></li>`
+      : `<li><button data-copy="${esc(o.value)}" data-label="${esc(o.label)}"
+             class="w-full text-left border-[2px] border-ink bg-cream px-5 py-4 hover:bg-brick hover:text-cream hover:border-brick transition-colors">
+             ${inner}</button></li>`;
+  }).join("");
+
+  document.querySelectorAll("#givingList [data-copy]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const sub = btn.querySelector(".font-mono");
+      const original = sub.textContent;
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy);
+        sub.textContent = "Copied - paste into your banking app";
+      } catch {
+        sub.textContent = "Copy failed - " + btn.dataset.copy;
+      }
+      setTimeout(() => { sub.textContent = original; }, 3000);
+    });
+  });
+}
+
 /* ---------- sharing ---------- */
 function setupShare() {
   const url = state.site.donate_url;
@@ -913,18 +1004,20 @@ document.getElementById("year").textContent = new Date().getFullYear();
 
 /* ---------- boot ---------- */
 (async function init() {
-  const [site, ms, gal, up, sup] = await Promise.all([
+  const [site, ms, gal, up, sup, giv] = await Promise.all([
     loadJSON("/content/site.json",       DEFAULTS.site),
     loadJSON("/content/milestones.json", DEFAULTS.milestones),
     loadJSON("/content/gallery.json",    DEFAULTS.gallery),
     loadJSON("/content/updates.json",    DEFAULTS.updates),
-    loadJSON("/content/supporters.json", DEFAULTS.supporters)
+    loadJSON("/content/supporters.json", DEFAULTS.supporters),
+    loadJSON("/content/giving.json",     DEFAULTS.giving)
   ]);
   applySite(site);
   renderWall((ms && ms.milestones) || DEFAULTS.milestones.milestones);
   renderGallery((gal && gal.items) || DEFAULTS.gallery.items);
   renderUpdates((up && up.posts) || DEFAULTS.updates.posts);
   renderSupporters((sup && sup.supporters) || DEFAULTS.supporters.supporters);
+  renderGiving(giv || DEFAULTS.giving);
 })();
 </script>
 </body>

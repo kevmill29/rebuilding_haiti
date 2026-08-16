@@ -163,3 +163,39 @@ collections:
           - { name: hero_eyebrow,  label: "Small line above the headline", widget: string, required: false }
           - { name: hero_headline, label: "Main headline", widget: string }
           - { name: hero_sub,      label: "Opening paragraph", widget: text, required: false, hint: "Leave empty to keep the wording that ships with the site." }
+
+  # ══════════════════════════════════════════════════════════════════
+  # 6. DIRECT GIVING — Zelle, Cash App, Venmo, PayPal
+  # ══════════════════════════════════════════════════════════════════
+  - name: giving
+    label: "Direct giving"
+    files:
+      - name: giving
+        label: "Zelle, Cash App, Venmo, PayPal"
+        file: "content/giving.json"
+        description: "Leave a box empty to hide that option. If all four are empty, the whole section disappears from the site. Test every handle by sending yourself one dollar before you publish."
+        fields:
+          - name: intro
+            label: "Short explanation"
+            widget: text
+            hint: "One or two sentences on why someone might send money this way."
+          - name: zelle
+            label: "Zelle"
+            widget: string
+            required: false
+            hint: "The email address or phone number registered with your bank. This one appears as text with a copy button, because Zelle has no web link. Whatever you enter here is public, so use an address you are comfortable publishing."
+          - name: cashapp
+            label: "Cash App"
+            widget: string
+            required: false
+            hint: "Your cashtag, for example JocelyE. The dollar sign is optional."
+          - name: venmo
+            label: "Venmo"
+            widget: string
+            required: false
+            hint: "Your username, for example jocely-emile. The @ is optional."
+          - name: paypal
+            label: "PayPal"
+            widget: string
+            required: false
+            hint: "Your PayPal.Me name, for example jocelye. Set one up at paypal.me if you have not already."
